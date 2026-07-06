@@ -75,6 +75,8 @@ async def review_code(request: CodeReviewRequest):
 @app.get("/")
 async def serve_frontend():
     frontend_path = os.path.join(os.path.dirname(__file__), "../frontend/index.html")
+    if not os.path.exists(frontend_path):
+        return {"error": "File not found", "path": os.path.abspath(frontend_path), "cwd": os.getcwd(), "file": __file__}
     return FileResponse(frontend_path)
 
 if __name__ == "__main__":
