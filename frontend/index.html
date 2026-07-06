@@ -106,8 +106,10 @@
                     body: JSON.stringify({ code, language })
                 });
 
-                if (!response.ok) throw new Error("API request failed. Check server logs.");
-                
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.detail || "API request failed. Check server logs.");
+                }
                 const data = await response.json();
 
                 // Populate UI
@@ -144,7 +146,7 @@
 
             } catch (error) {
                 console.error(error);
-                alert("Error connecting to the backend. Is main.py running?");
+                alert(`Error: ${error.message}`);
             } finally {
                 // Reset UI Loading State
                 btn.disabled = false;
