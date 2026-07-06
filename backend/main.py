@@ -10,9 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure Gemini API
-# Make sure to run 'export GEMINI_API_KEY="your-key"' in your terminal
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
 
 app = FastAPI(title="CodeLens AI API")
 
