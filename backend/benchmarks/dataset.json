@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Time Complexity: Bubble Sort",
+    "language": "Python",
+    "code": "def sort_arr(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr"
+  },
+  {
+    "name": "Security: SQL Injection",
+    "language": "Python",
+    "code": "import sqlite3\n\ndef get_user(username):\n    conn = sqlite3.connect('users.db')\n    cursor = conn.cursor()\n    cursor.execute(f\"SELECT * FROM users WHERE username = '{username}'\")\n    return cursor.fetchall()"
+  },
+  {
+    "name": "Space Complexity: Unnecessary Array Copies",
+    "language": "Java",
+    "code": "public class StringReverse {\n    public static String reverse(String str) {\n        String result = \"\";\n        for (int i = str.length() - 1; i >= 0; i--) {\n            result += str.charAt(i);\n        }\n        return result;\n    }\n}"
+  },
+  {
+    "name": "Logic Bug: Off by One",
+    "language": "C++",
+    "code": "#include <iostream>\n#include <vector>\n\nint sum(std::vector<int> numbers) {\n    int total = 0;\n    for(int i = 0; i <= numbers.size(); i++) {\n        total += numbers[i];\n    }\n    return total;\n}"
+  },
+  {
+    "name": "Stylistic & Performance Nightmare",
+    "language": "Python",
+    "code": "def f(lst):\n  a=[]\n  for x in lst:\n    if lst.count(x)>1 and x not in a:\n      a.append(x)\n  return a"
+  }
+]
