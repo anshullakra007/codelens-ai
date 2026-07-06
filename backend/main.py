@@ -4,7 +4,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -53,15 +54,16 @@ async def review_code(request: CodeReviewRequest):
         raise HTTPException(status_code=500, detail="Gemini API Key not configured on server.")
         
     try:
-        # Utilizing gemini-1.5-flash-latest for lightning fast turnarounds
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash-latest",
-            generation_config={"response_mime_type": "application/json"}
-        )
-        
+        # Utilizing the new google-genai SDK
+        client = genai.Client()
         user_content = f"Language: {request.language}\n\nCode Snippet:\n{request.code}"
-        
-        response = model.generate_content([SYSTEM_PROMPT, user_content])
+        response = client.models.generate_content(
+            model='gemini-1.5-flash',
+            contents=[SYSTEM_PROMPT, user_content],
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+            )
+        )
         
         # Parse output string into valid JSON to ensure client gets pristine structure
         result_json = json.loads(response.text)
