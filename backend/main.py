@@ -56,7 +56,7 @@ async def review_code(request: CodeReviewRequest):
         client = genai.Client()
         user_content = f"Language: {request.language}\n\nCode Snippet:\n{request.code}"
         response = client.models.generate_content(
-            model='gemini-2.0-flash',
+            model='gemini-1.5-flash',
             contents=[SYSTEM_PROMPT, user_content],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
