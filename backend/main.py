@@ -23,6 +23,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/api/models")
+async def get_models():
+    import requests
+    import os
+    key = os.getenv("GEMINI_API_KEY")
+    resp = requests.get(f"https://generativelanguage.googleapis.com/v1beta/models?key={key}")
+    return resp.json()
+
 class CodeReviewRequest(BaseModel):
     code: str
     language: str
