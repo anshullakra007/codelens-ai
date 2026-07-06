@@ -53,9 +53,9 @@ async def review_code(request: CodeReviewRequest):
         raise HTTPException(status_code=500, detail="Gemini API Key not configured on server.")
         
     try:
-        # Utilizing gemini-1.5-flash for lightning fast turnarounds
+        # Utilizing gemini-1.5-flash-latest for lightning fast turnarounds
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-1.5-flash-latest",
             generation_config={"response_mime_type": "application/json"}
         )
         
