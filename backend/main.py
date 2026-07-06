@@ -1,7 +1,7 @@
 import os
 import json
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -72,9 +72,10 @@ async def review_code(request: CodeReviewRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Mount the frontend directory to serve the UI
-frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+@app.get("/")
+async def serve_frontend():
+    frontend_path = os.path.join(os.path.dirname(__file__), "../frontend/index.html")
+    return FileResponse(frontend_path)
 
 if __name__ == "__main__":
     import uvicorn
